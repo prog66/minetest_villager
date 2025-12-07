@@ -175,7 +175,7 @@ minetest.register_chatcommand("vlw_spawn", {
 })
 
 minetest.register_chatcommand("vlw_job", {
-  params = "<builder|farmer|miner|soldier|carrier|foreman|idle>",
+  params = "<idle|builder|farmer|miner|soldier|carrier|foreman|lumberjack|guard>",
   description = "Assigner un job au worker pointé",
   privs = {interact = true},
   func = function(name, param)
