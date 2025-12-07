@@ -46,10 +46,14 @@ local function do_prepare(ent)
   if step.name == "mcl_farming:soil" then
     local under = minetest.get_node_or_nil({x = np.x, y = np.y, z = np.z})
     if under and under.name ~= "mcl_farming:soil" then
-      minetest.set_node(np, {name = "mcl_farming:soil"})
+      if not minetest.is_protected(np, "") then
+        minetest.set_node(np, {name = "mcl_farming:soil"})
+      end
     end
   elseif step.name == "mcl_core:water_source" then
-    minetest.set_node(np, {name = "mcl_core:water_source"})
+    if not minetest.is_protected(np, "") then
+      minetest.set_node(np, {name = "mcl_core:water_source"})
+    end
   end
 
   ent._.job_data.idx = idx + 1
@@ -78,7 +82,9 @@ local function do_plant(ent)
 
   local n = minetest.get_node_or_nil(np)
   if n and (n.name == "air" or n.name:find("wheat_")) then
-    minetest.set_node(np, {name = FARM_NODES.stages.base})
+    if not minetest.is_protected(np, "") then
+      minetest.set_node(np, {name = FARM_NODES.stages.base})
+    end
   end
 
   ent._.job_data.idx = idx + 1
@@ -108,10 +114,12 @@ local function do_harvest(ent)
 
   local n = minetest.get_node_or_nil(np)
   if n and n.name == FARM_NODES.stages.mature then
-    minetest.remove_node(np)
-    vlw.inventory.add(ent._.inv, "mcl_farming:wheat", math.random(1, 3))
-    vlw.inventory.add(ent._.inv, "mcl_farming:wheat_seeds", math.random(0, 2))
-    minetest.set_node(np, {name = FARM_NODES.stages.base})
+    if not minetest.is_protected(np, "") then
+      minetest.remove_node(np)
+      vlw.inventory.add(ent._.inv, "mcl_farming:wheat", math.random(1, 3))
+      vlw.inventory.add(ent._.inv, "mcl_farming:wheat_seeds", math.random(0, 2))
+      minetest.set_node(np, {name = FARM_NODES.stages.base})
+    end
   end
 
   ent._.job_data.idx = idx + 1
