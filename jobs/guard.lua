@@ -1,10 +1,12 @@
 vlw = rawget(_G, "vlw") or {}
 _G.vlw = vlw
 vlw.jobs = vlw.jobs or {}
-vlw.jobs.soldier = {}
+vlw.jobs.guard = {}
+
+-- Guard job: patrols a guard post and defends against hostile mobs
 
 local function nearest_hostile(pos, r)
-  local objs = minetest.get_objects_inside_radius(pos, r or 12)
+  local objs = minetest.get_objects_inside_radius(pos, r or 16)
   local best, bestd
   for _, obj in ipairs(objs) do
     if not obj:is_player() then
@@ -26,12 +28,21 @@ local function nearest_hostile(pos, r)
   return best
 end
 
-function vlw.jobs.soldier.step(ent)
+function vlw.jobs.guard.step(ent)
   local pos = ent.object:get_pos()
   if not pos then return end
 
-  local hostile = nearest_hostile(pos, 14)
+  -- Set guard post if not set
+  if not ent._.job_data.guard_post then
+    ent._.job_data.guard_post = vlw.util.round(pos)
+  end
+
+  local guard_post = ent._.job_data.guard_post
+
+  -- Look for hostiles near guard post
+  local hostile = nearest_hostile(guard_post, 16)
   if hostile then
+    -- Chase and attack hostile
     vlw.nav.pathfind_to(ent, hostile:get_pos())
     if vector.distance(pos, hostile:get_pos()) < 2.2 then
       -- Track last punch time
@@ -46,9 +57,19 @@ function vlw.jobs.soldier.step(ent)
       end
     end
   else
-    if (not ent._.job_data.goal) or vector.distance(pos, ent._.job_data.goal) < 1.0 then
-      ent._.job_data.goal = vector.add(pos, {x = math.random(-8, 8), y = 0, z = math.random(-8, 8)})
+    -- Return to guard post if too far
+    if vector.distance(pos, guard_post) > 4.0 then
+      vlw.nav.pathfind_to(ent, guard_post)
+    else
+      -- Patrol around guard post
+      if (not ent._.job_data.patrol_goal) or vector.distance(pos, ent._.job_data.patrol_goal) < 1.0 then
+        ent._.job_data.patrol_goal = vector.add(guard_post, {
+          x = math.random(-4, 4),
+          y = 0,
+          z = math.random(-4, 4),
+        })
+      end
+      vlw.nav.pathfind_to(ent, ent._.job_data.patrol_goal)
     end
-    vlw.nav.pathfind_to(ent, ent._.job_data.goal)
   end
 end

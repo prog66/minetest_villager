@@ -23,7 +23,7 @@ minetest.register_chatcommand("vlw_ui", {
     end
 
     local fs = ""
-    fs = fs .. "size[6,5]"
+    fs = fs .. "size[6,6.5]"
     fs = fs .. "label[0.3,0.3;vl_workforce - Gestion]"
     fs = fs .. "label[0.3,0.8;Job actuel: " .. minetest.formspec_escape(ent._.job or "idle") .. "]"
     fs = fs .. "button[0.3,1.4;2.5,0.8;job_builder;Builder]"
@@ -31,7 +31,10 @@ minetest.register_chatcommand("vlw_ui", {
     fs = fs .. "button[0.3,2.4;2.5,0.8;job_miner;Miner]"
     fs = fs .. "button[3.2,2.4;2.5,0.8;job_soldier;Soldier]"
     fs = fs .. "button[0.3,3.4;2.5,0.8;job_carrier;Carrier]"
-    fs = fs .. "button[3.2,3.4;2.5,0.8;job_idle;Idle]"
+    fs = fs .. "button[3.2,3.4;2.5,0.8;job_foreman;Foreman]"
+    fs = fs .. "button[0.3,4.4;2.5,0.8;job_lumberjack;Lumberjack]"
+    fs = fs .. "button[3.2,4.4;2.5,0.8;job_guard;Guard]"
+    fs = fs .. "button[0.3,5.4;2.5,0.8;job_idle;Idle]"
 
     local key = name .. "#vlw_ui"
     FORMS[key] = obj
