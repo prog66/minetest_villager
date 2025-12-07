@@ -3,8 +3,7 @@ _G.vlw = vlw
 vlw.jobs = vlw.jobs or {}
 vlw.jobs.guard = {}
 
--- Placeholder for guard job
--- Similar to soldier but guards a specific position
+-- Guard job: patrols a guard post and defends against hostile mobs
 
 local function nearest_hostile(pos, r)
   local objs = minetest.get_objects_inside_radius(pos, r or 16)
@@ -13,10 +12,15 @@ local function nearest_hostile(pos, r)
     if not obj:is_player() then
       local le = obj:get_luaentity()
       if le and le.name and le.name ~= vlw.modname .. ":worker" then
-        local d = vector.distance(pos, obj:get_pos())
-        if not best or d < bestd then
-          best = obj
-          bestd = d
+        -- Check if it's a hostile mob (has type = "monster" or attack_type)
+        if le.type == "monster" or le.attack_type or 
+           (le.name and (le.name:find("zombie") or le.name:find("skeleton") or 
+                         le.name:find("spider") or le.name:find("creeper"))) then
+          local d = vector.distance(pos, obj:get_pos())
+          if not best or d < bestd then
+            best = obj
+            bestd = d
+          end
         end
       end
     end
@@ -41,10 +45,16 @@ function vlw.jobs.guard.step(ent)
     -- Chase and attack hostile
     vlw.nav.pathfind_to(ent, hostile:get_pos())
     if vector.distance(pos, hostile:get_pos()) < 2.2 then
-      hostile:punch(ent.object, 0.5, {
-        full_punch_interval = 0.8,
-        damage_groups = {fleshy = 4},
-      }, nil)
+      -- Track last punch time
+      local now = minetest.get_gametime()
+      local last_punch = ent._.job_data.last_punch or 0
+      if now - last_punch >= 0.8 then
+        hostile:punch(ent.object, 1.0, {
+          full_punch_interval = 0.8,
+          damage_groups = {fleshy = 4},
+        }, nil)
+        ent._.job_data.last_punch = now
+      end
     end
   else
     -- Return to guard post if too far

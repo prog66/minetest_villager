@@ -3,8 +3,8 @@ _G.vlw = vlw
 vlw.jobs = vlw.jobs or {}
 vlw.jobs.lumberjack = {}
 
--- Placeholder for lumberjack job
--- TODO: Implement tree detection, pathfinding to trees, chopping, and replanting
+-- Lumberjack job: finds and chops trees, stores wood in inventory
+-- Future enhancement: implement replanting
 
 local TREE_NODES = {
   "mcl_core:tree",
@@ -60,8 +60,15 @@ function vlw.jobs.lumberjack.step(ent)
   -- Chop the tree
   local ok, name = vlw.world.dig_node_safe(tgt)
   if ok then
-    -- Add wood to inventory
-    if name:find("tree") then
+    -- Add wood to inventory - verify it's actually a tree from our list
+    local is_tree = false
+    for _, tree_name in ipairs(TREE_NODES) do
+      if name == tree_name then
+        is_tree = true
+        break
+      end
+    end
+    if is_tree then
       vlw.inventory.add(ent._.inv, name, 1)
     end
     ent._.job_data.target = nil
