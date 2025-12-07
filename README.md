@@ -27,13 +27,25 @@ Workforce IA avancée pour **VoxeLibre / MineClone2** sur **Luanti/Minetest ≥ 
 - `/vlw_spawn`  
   Fait apparaître un worker près de vous.
 
-- `/vlw_job <builder|farmer|miner|soldier|carrier|foreman|idle>`  
+- `/vlw_job <idle|builder|farmer|miner|soldier|carrier|foreman|lumberjack|guard>`  
   Change le job du worker que vous regardez.
 
 - `/vlw_ui`  
   Ouvre une petite interface pour changer le job du worker visé.
 
 Les commandes exigent `interact` (ou `server` si vous renforcez les droits).
+
+## Jobs disponibles
+
+- **idle** : Le worker se promène sans but précis.
+- **builder** : Construit des structures selon un blueprint (par défaut : une petite cabane).
+- **farmer** : Prépare une parcelle 9x9, plante et récolte automatiquement du blé.
+- **miner** : Cherche et mine du charbon, du fer et de la pierre aux alentours.
+- **soldier** : Patrouille et attaque les entités hostiles à proximité.
+- **carrier** : Dépose tous ses items dans le coffre le plus proche puis passe en idle.
+- **foreman** : Change automatiquement de job toutes les 30-60 secondes (farmer/miner/builder).
+- **lumberjack** : Cherche et coupe des arbres (placeholder, fonctionnel de base).
+- **guard** : Patrouille autour d'un point de garde et attaque les hostiles (placeholder).
 
 ## Dépendances
 

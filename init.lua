@@ -33,12 +33,15 @@ dofile(modpath .. "/core/skins.lua")
 dofile(modpath .. "/blueprints/hut.lua")
 dofile(modpath .. "/blueprints/farm_9x9.lua")
 
+dofile(modpath .. "/jobs/idle.lua")
 dofile(modpath .. "/jobs/builder.lua")
 dofile(modpath .. "/jobs/farmer.lua")
 dofile(modpath .. "/jobs/miner.lua")
 dofile(modpath .. "/jobs/soldier.lua")
 dofile(modpath .. "/jobs/carrier.lua")
 dofile(modpath .. "/jobs/foreman.lua")
+dofile(modpath .. "/jobs/lumberjack.lua")
+dofile(modpath .. "/jobs/guard.lua")
 
 dofile(modpath .. "/ui.lua")
 
