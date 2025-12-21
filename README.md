@@ -16,11 +16,32 @@ Workforce IA avancée pour **VoxeLibre / MineClone2** sur **Luanti/Minetest ≥ 
 
 ## Installation
 
-1. Copier le dossier `vl_workforce/` dans le répertoire :
+**Important:** Téléchargez toujours la dernière version depuis [GitHub](https://github.com/prog66/minetest_villager).
+
+### Installation depuis GitHub
+
+1. **Télécharger** le mod :
+   - Cliquez sur "Code" → "Download ZIP" sur la page GitHub, **ou**
+   - Clonez le dépôt : `git clone https://github.com/prog66/minetest_villager.git`
+
+2. **Extraire et renommer** :
+   - Extrayez le fichier ZIP
+   - Renommez le dossier en `vl_workforce` (important!)
+
+3. **Copier** le dossier `vl_workforce/` dans :
    - `worldmods/` de votre monde VoxeLibre, **ou**
-   - `games/VoxeLibre/mods/` pour l'avoir partout.
-2. Vérifier que vous lancez bien un jeu basé sur VoxeLibre / MineClone2.
-3. Démarrer le monde.
+   - `games/VoxeLibre/mods/` ou `games/mineclone2/mods/` pour l'avoir partout.
+
+4. Vérifier que vous lancez bien un jeu basé sur VoxeLibre / MineClone2.
+
+5. Démarrer le monde.
+
+### Dépannage
+
+Si vous obtenez une erreur `ModError: Missing file 'modutil/portable.lua'`, assurez-vous de :
+- Utiliser la version actuelle du mod depuis GitHub
+- Avoir correctement extrait tous les fichiers
+- Le dossier doit s'appeler `vl_workforce` (pas `minetest_villager-main` ou `working_villages-master`)
 
 ## Commandes principales
 
