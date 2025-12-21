@@ -1,11 +1,11 @@
 --[[
   modutil/portable.lua
   
-  This file provides cross-platform compatibility utilities for the mod.
-  It exists for backwards compatibility with older versions of the mod.
+  This file exists for backwards compatibility only.
+  Older versions or configurations of this mod may reference this file.
   
   Note: The current version (vl_workforce) does not require this file,
-  but it's included to prevent errors if users have outdated references.
+  but it's included to prevent ModError if users have outdated references.
 ]]
 
 -- Return an empty table or provide minimal utilities
